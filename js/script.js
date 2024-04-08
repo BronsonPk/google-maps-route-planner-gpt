@@ -2,30 +2,9 @@
 function initMap() {
     // Create a map object and specify the DOM element for display
     const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 48.86658474150988, lng: 2.324887381423979 }, // Update with your desired center coordinates
-        zoom: 12 // Adjust zoom level as needed
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8
     });
-
-    // Custom icons
-    const icons = {
-        hotel: {
-            url: 'icons/hotel-icon.png',
-            scaledSize: new google.maps.Size(32, 32)
-        },
-        venue: {
-            url: 'icons/cocktail.png',
-            scaledSize: new google.maps.Size(32, 32)
-        },
-        checkpoint: {
-            url: 'icons/scan-code.png',
-            scaledSize: new google.maps.Size(32, 32)
-        },
-        psa: {
-            url: 'icons/PSA-icon.png',
-            scaledSize: new google.maps.Size(32, 32)
-        }
-        // Add more custom icons as needed
-    };
 
     // Read and parse CSV file
     Papa.parse("csv/full json map csv.csv", {
@@ -59,7 +38,4 @@ function initMap() {
             perimeterPolyline.setMap(map);
         }
     });
-
-    // Populate dropdown menus and other logic
-    // This code was implemented in the previous steps
 }
