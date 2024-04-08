@@ -85,6 +85,9 @@ function initMap() {
 
                 // Add markers to the map
                 addMarkersToMap(hotel, ovh, venue);
+
+                // Draw security perimeter
+                drawSecurityPerimeter();
             } else {
                 console.error('Directions request failed due to ' + status);
             }
@@ -116,6 +119,26 @@ function initMap() {
 
         // Logic to add PCH/PSE markers (if needed)
         // This will be implemented later
+    }
+
+    // Function to draw security perimeter
+    function drawSecurityPerimeter() {
+        // Define coordinates for security perimeter
+        const perimeterCoordinates = [
+            { lat: 48.86658474150988, lng: 2.324887381423979 },  // Example coordinate 1
+            { lat: 48.86512345678901, lng: 2.321234567890123 },  // Example coordinate 2
+            // Add more coordinates as needed
+        ];
+
+        // Draw security perimeter on map
+        const perimeterPath = new google.maps.Polyline({
+            path: perimeterCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000', // Red color for security perimeter
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+        perimeterPath.setMap(map);
     }
 
     // Add markers, draw security perimeter, and handle routing logic
