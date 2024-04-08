@@ -1,13 +1,10 @@
-// Initialize map
+// Define initMap function
 function initMap() {
-    // Map options
-    const mapOptions = {
-        center: { lat: 48.864716, lng: 2.349014 }, // Paris coordinates
-        zoom: 13
-    };
-
-    // Create map
-    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    // Create a map object and specify the DOM element for display
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 48.86658474150988, lng: 2.324887381423979 }, // Update with your desired center coordinates
+        zoom: 12 // Adjust zoom level as needed
+    });
 
     // Custom icons
     const icons = {
@@ -31,38 +28,38 @@ function initMap() {
     };
 
     // Read and parse CSV file
-Papa.parse("csv/full json map csv.csv", {
-    download: true,
-    header: true,
-    complete: function(results) {
-        // Once CSV is parsed, you can access the data in `results.data`
-        const csvData = results.data;
-        console.log(csvData);
+    Papa.parse("csv/full json map csv.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+            // Once CSV is parsed, you can access the data in `results.data`
+            const csvData = results.data;
+            console.log(csvData);
 
-        // Draw security perimeter
-        const perimeterCoordinates = []; // Array to store coordinates of the perimeter
+            // Draw security perimeter
+            const perimeterCoordinates = []; // Array to store coordinates of the perimeter
 
-        csvData.forEach(row => {
-            if (row.type === 'PSA') {
-                // Add PSA coordinates to perimeterCoordinates array
-                const lat = parseFloat(row['geometry/coordinates/1']);
-                const lng = parseFloat(row['geometry/coordinates/0']);
-                perimeterCoordinates.push({ lat, lng });
-            }
-        });
+            csvData.forEach(row => {
+                if (row.type === 'PSA') {
+                    // Add PSA coordinates to perimeterCoordinates array
+                    const lat = parseFloat(row['geometry/coordinates/1']);
+                    const lng = parseFloat(row['geometry/coordinates/0']);
+                    perimeterCoordinates.push({ lat, lng });
+                }
+            });
 
-        // Draw polyline for security perimeter
-        const perimeterPolyline = new google.maps.Polyline({
-            path: perimeterCoordinates,
-            geodesic: true,
-            strokeColor: '#FF0000', // Red color
-            strokeOpacity: 0.8,
-            strokeWeight: 2
-        });
-        perimeterPolyline.setMap(map);
-    }
-});
+            // Draw polyline for security perimeter
+            const perimeterPolyline = new google.maps.Polyline({
+                path: perimeterCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000', // Red color
+                strokeOpacity: 0.8,
+                strokeWeight: 2
+            });
+            perimeterPolyline.setMap(map);
+        }
+    });
 
     // Populate dropdown menus and other logic
-    // This code was implemented in the previous step
+    // This code was implemented in the previous steps
 }
