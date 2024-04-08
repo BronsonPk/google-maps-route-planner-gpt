@@ -8,24 +8,14 @@
 </head>
 <body>
     <div id="controls">
-        <select id="hotels">
-            <option value="">Select Hotel</option>
-            <!-- Hotels will be populated dynamically -->
-        </select>
-        <select id="venues">
-            <option value="">Select Venue</option>
-            <!-- Venues will be populated dynamically -->
-        </select>
-        <select id="preCER">
-            <option value="">Select Pre-CER Hospitality</option>
-            <!-- Pre-CER Hospitality areas will be populated dynamically -->
-        </select>
-        <button id="getBestRoute">Get Best Route</button>
+        <!-- Dropdowns and button code goes here -->
     </div>
     <div id="map"></div>
 
+    <!-- Include PapaParse library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="js/script.js"></script>
+    <!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjlGkxN5JMqjBQn0Tb0HY-3hG8ACkITuM&callback=initMap"></script>
 </body>
 </html>
-
