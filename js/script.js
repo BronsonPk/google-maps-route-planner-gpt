@@ -31,7 +31,7 @@ function initMap() {
     };
 
     // Read and parse CSV file
-    Papa.parse("csv/custom_map_json data in csv format.csv", {
+    Papa.parse("csv/full json map csv.csv", {
         download: true,
         header: true,
         complete: function(results) {
@@ -39,23 +39,30 @@ function initMap() {
             const csvData = results.data;
             console.log(csvData);
 
-            // Now you can use csvData to populate dropdown menus and handle routing
-            // We'll implement this part in the next steps
+            // Draw security perimeter
+            const perimeterCoordinates = []; // Array to store coordinates of the perimeter
+
+            csvData.forEach(row => {
+                if (row.type === 'PSA') {
+                    // Add PSA coordinates to perimeterCoordinates array
+                    const lat = parseFloat(row['geometry/coordinates/1']);
+                    const lng = parseFloat(row['geometry/coordinates/0']);
+                    perimeterCoordinates.push({ lat, lng });
+                }
+            });
+
+            // Draw polyline for security perimeter
+            const perimeterPolyline = new google.maps.Polyline({
+                path: perimeterCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000', // Red color
+                strokeOpacity: 0.8,
+                strokeWeight: 2
+            });
+            perimeterPolyline.setMap(map);
         }
     });
 
-    // Add event listener for Get Best Route button
-    document.getElementById('getBestRoute').addEventListener('click', function() {
-        // Logic to calculate and display the best route
-        // This will be implemented later
-    });
-
-    // Function to calculate route using Directions Service
-    // This will be implemented later in the code
-
-    // Function to add markers to the map
-    // This will be implemented later in the code
-
-    // Function to draw security perimeter
-    // This will be implemented later in the code
+    // Populate dropdown menus and other logic
+    // This code was implemented in the previous step
 }
