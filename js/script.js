@@ -31,7 +31,7 @@ function initMap() {
     };
 
     // Read and parse CSV file
-    Papa.parse("data.csv", {
+    Papa.parse("csv/custom_map_json data in csv format.csv", {
         download: true,
         header: true,
         complete: function(results) {
