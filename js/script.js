@@ -63,4 +63,61 @@ function initMap() {
         directionsService.route(request, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 // Display route on map
-                const directions
+                const directionsRenderer = new google.maps.DirectionsRenderer({
+                    map: map,
+                    polylineOptions: {
+                        strokeColor: '#0000FF', // Blue color for hotel to PSA route
+                        strokeWeight: 5
+                    },
+                    suppressMarkers: true // Suppress default markers
+                });
+                directionsRenderer.setDirections(response);
+
+                // Display travel time hotel to PSA
+                const hotelToPsaRoute = response.routes[0];
+                const travelTimeHotelToPsa = hotelToPsaRoute.legs[0].duration.text;
+                console.log("Travel time from hotel to PSA:", travelTimeHotelToPsa);
+
+                // Display travel time PSA to venue
+                const psaToVenueRoute = response.routes[0];
+                const travelTimePsaToVenue = psaToVenueRoute.legs[1].duration.text;
+                console.log("Travel time from PSA to venue:", travelTimePsaToVenue);
+
+                // Add markers to the map
+                addMarkersToMap(hotel, ovh, venue);
+            } else {
+                console.error('Directions request failed due to ' + status);
+            }
+        });
+    }
+
+    // Function to add markers to the map
+    function addMarkersToMap(hotel, ovh, venue) {
+        // Add hotel marker
+        const hotelMarker = new google.maps.Marker({
+            position: hotel,
+            map: map,
+            icon: icons.hotel
+        });
+
+        // Add OVH marker
+        const ovhMarker = new google.maps.Marker({
+            position: ovh,
+            map: map,
+            icon: icons.venue
+        });
+
+        // Add venue marker
+        const venueMarker = new google.maps.Marker({
+            position: venue,
+            map: map,
+            icon: icons.venue
+        });
+
+        // Logic to add PCH/PSE markers (if needed)
+        // This will be implemented later
+    }
+
+    // Add markers, draw security perimeter, and handle routing logic
+    // This will be implemented later in the code
+}
