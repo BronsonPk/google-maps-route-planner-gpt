@@ -32,9 +32,20 @@ function initMap() {
 
     // Add event listener for Get Best Route button
     document.getElementById('getBestRoute').addEventListener('click', function() {
-        // Logic to calculate and display the best route
-        // This will be implemented later
+        // Get selected hotel, venue, and Pre-CER Hospitality (OVH)
+        const selectedHotel = document.getElementById('hotels').value;
+        const selectedVenue = document.getElementById('venues').value;
+        const selectedOVH = document.getElementById('preCER').value;
+
+        // Calculate route using Directions Service
+        calculateRoute(selectedHotel, selectedOVH, selectedVenue);
     });
+
+    // Function to calculate route using Directions Service
+    function calculateRoute(hotel, ovh, venue) {
+        // Logic to calculate and display the route
+        // This will be implemented later
+    }
 
     // Add markers, draw security perimeter, and handle routing logic
     // This will be implemented later in the code
