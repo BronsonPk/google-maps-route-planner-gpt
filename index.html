@@ -25,16 +25,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="js/script.js"></script>
     <!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjlGkxN5JMqjBQn0Tb0HY-3hG8ACkITuM&callback=initMap"></script>
-<script>
-    function loadGoogleMapsScript() {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBjlGkxN5JMqjBQn0Tb0HY-3hG8ACkITuM&callback=initMap`;
-        script.async = true;
-        document.body.appendChild(script);
-    }
-    loadGoogleMapsScript();
-</script>
-
+    <script>
+        function loadGoogleMapsScript() {
+            const script = document.createElement('script');
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBjlGkxN5JMqjBQn0Tb0HY-3hG8ACkITuM&callback=initMap`;
+            script.async = true;
+            document.body.appendChild(script);
+        }
+        loadGoogleMapsScript();
+    </script>
 </body>
 </html>
