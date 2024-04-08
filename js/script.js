@@ -63,34 +63,4 @@ function initMap() {
         directionsService.route(request, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
                 // Display route on map
-                const directionsRenderer = new google.maps.DirectionsRenderer({
-                    map: map,
-                    polylineOptions: {
-                        strokeColor: '#0000FF', // Blue color for hotel to PSA route
-                        strokeWeight: 5
-                    },
-                    suppressMarkers: true // Suppress default markers
-                });
-                directionsRenderer.setDirections(response);
-
-                // Display travel time hotel to PSA
-                const hotelToPsaRoute = response.routes[0];
-                const travelTimeHotelToPsa = hotelToPsaRoute.legs[0].duration.text;
-                console.log("Travel time from hotel to PSA:", travelTimeHotelToPsa);
-
-                // Display travel time PSA to venue
-                const psaToVenueRoute = response.routes[0];
-                const travelTimePsaToVenue = psaToVenueRoute.legs[1].duration.text;
-                console.log("Travel time from PSA to venue:", travelTimePsaToVenue);
-            } else {
-                console.error('Directions request failed due to ' + status);
-            }
-        });
-    }
-
-    // Add markers, draw security perimeter,
-
-
-    // Add markers, draw security perimeter, and handle routing logic
-    // This will be implemented later in the code
-}
+                const directions
