@@ -88,4 +88,32 @@ function getMarkerIconURL(locationName) {
     }
     // Assuming icons are stored in the 'icons/' directory
     return 'google-maps-route-planner-gpt/icons/' + iconName;
+
+    // Function to populate dropdown menus with options from CSV data
+function populateDropdownMenus() {
+    // Read and parse CSV file
+    Papa.parse("google-maps-route-planner-gpt/csv/full json map csv2.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+            // Once CSV is parsed, extract unique location types
+            const csvData = results.data;
+            const locationTypes = new Set(); // Using Set to store unique values
+            for (let i = 0; i < csvData.length; i++) {
+                locationTypes.add(csvData[i]['type']);
+            }
+            // Populate dropdown menus with unique location types
+            locationTypes.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                document.getElementById('locationType').appendChild(option);
+            });
+        }
+    });
+}
+
+// Call the function to populate dropdown menus when the page loads
+populateDropdownMenus();
+
 }
