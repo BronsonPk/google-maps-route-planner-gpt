@@ -11,7 +11,7 @@ function initMap() {
     const venues = [];
     const preCER = []; // OVH locations for Pre-CER Hospitality
     
-    // Array to store currently displayed markers
+    // Array to store all markers
     let markers = [];
 
     // Read and parse CSV file
@@ -30,31 +30,17 @@ function initMap() {
                 switch(row.type) {
                     case 'Hotel':
                         iconPath = 'google-maps-route-planner-gpt/icons/hotel-icon.png';
-                        hotels.push({ name: row['properties/Name'], position: { lat, lng } });
+                        hotels.push({ name: row['properties/Name'], position: { lat, lng }, icon: iconPath });
                         break;
                     case 'Venue':
                         iconPath = 'google-maps-route-planner-gpt/icons/cocktail.png';
-                        venues.push({ name: row['properties/Name'], position: { lat, lng } });
+                        venues.push({ name: row['properties/Name'], position: { lat, lng }, icon: iconPath });
                         break;
                     case 'OVH':
                         iconPath = 'google-maps-route-planner-gpt/icons/PSA-icon.png';
-                        preCER.push({ name: row['properties/Name'], position: { lat, lng } });
+                        preCER.push({ name: row['properties/Name'], position: { lat, lng }, icon: iconPath });
                         break;
                 }
-
-                // Create custom icon
-                const icon = {
-                    url: iconPath,
-                    scaledSize: new google.maps.Size(32, 32) // Adjust size if needed
-                };
-
-                // Create marker for each location
-                const marker = new google.maps.Marker({
-                    position: { lat, lng },
-                    map: null, // Initially set map to null
-                    title: row['properties/Name'],
-                    icon: icon
-                });
             });
 
             // Populate dropdown menus
@@ -64,44 +50,40 @@ function initMap() {
             
             // Event listener for dropdown change
             document.getElementById('hotels').addEventListener('change', function() {
-                updateMarker('hotels', hotels);
+                updateMarkers(hotels);
             });
             document.getElementById('venues').addEventListener('change', function() {
-                updateMarker('venues', venues);
+                updateMarkers(venues);
             });
             document.getElementById('preCER').addEventListener('change', function() {
-                updateMarker('preCER', preCER);
+                updateMarkers(preCER);
             });
         }
     });
 
-    // Function to update marker based on dropdown selection
-    function updateMarker(dropdownId, locations) {
-        // Remove all markers from map
+    // Function to update markers based on dropdown selection
+    function updateMarkers(locations) {
+        // Clear all markers from the map
         markers.forEach(marker => {
             marker.setMap(null);
         });
         markers = [];
 
-        // Get selected location from dropdown
-        const selectedLocation = document.getElementById(dropdownId).value;
-
-        // Find corresponding location object
-        const location = locations.find(loc => loc.name === selectedLocation);
-        if (location) {
-            // Create marker for selected location
-            const marker = new google.maps.Marker({
-                position: location.position,
-                map: map,
-                title: location.name,
-                icon: location.icon
-            });
-            markers.push(marker);
-            
-            // Center map on selected location
-            map.setCenter(location.position);
-            map.setZoom(14); // Zoom in to show selected location
-        }
+        // Loop through selected locations
+        locations.forEach(location => {
+            if (location.name === document.getElementById('hotels').value ||
+                location.name === document.getElementById('venues').value ||
+                location.name === document.getElementById('preCER').value) {
+                // Create marker for selected location
+                const marker = new google.maps.Marker({
+                    position: location.position,
+                    map: map,
+                    title: location.name,
+                    icon: location.icon
+                });
+                markers.push(marker);
+            }
+        });
     }
 }
 
