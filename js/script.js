@@ -11,13 +11,15 @@ function initMap() {
 
     // Read and parse CSV file
     Papa.parse("csv/full json map csv2.csv", {
-        download: true,
-        header: true,
-        complete: function(results) {
-            // Once CSV is parsed, you can access the data in `results.data`
-            const csvData = results.data;
-            console.log(csvData);
-
+    download: true,
+    header: true,
+    complete: function(results) {
+        const csvData = results.data;
+        csvData.forEach(row => {
+            // New code snippet for extracting location data and populating dropdowns
+        });
+    }
+});
             // Loop through each row in the CSV data
             csvData.forEach(row => {
                 // Extract latitude and longitude coordinates from the CSV data
