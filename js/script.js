@@ -1,118 +1,74 @@
-// Define global variables to store map and markers
-let map;
-let markers = {};
-
-// Function to initialize the map
+// Define initMap function
 function initMap() {
-    // Initialize map centered at a default location
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 48.864716, lng: 2.349014 },
-        zoom: 12
+    // Create a map object and specify the DOM element for display
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 48.8566, lng: 2.3522 }, // Centered on Paris
+        zoom: 12 // Zoom level adjusted for Paris
     });
-}
-// Arrays to store unique locations of each type
+
+    // Arrays to store unique locations of each type
     const hotels = [];
     const venues = [];
     const preCER = []; // OVH locations for Pre-CER Hospitality
 
-// Function to handle dropdown selection
-function handleDropdownSelection() {
-    // Get the selected location from the dropdown
-    const locationType = document.getElementById('locationType').value;
-
-    // Check if the marker already exists for the selected location
-    if (markers[locationType]) {
-        markers[locationType].setMap(map); // Show existing marker on the map
-        map.setCenter(markers[locationType].getPosition()); // Center map on marker
-    } else {
-        // Marker doesn't exist, fetch coordinates from CSV
-        getLocationCoordinates(locationType);
-    }
-}
-
-// Function to extract coordinates from CSV data based on selected location
-function getLocationCoordinates(locationType) {
     // Read and parse CSV file
-    Papa.parse("google-maps-route-planner-gpt/csv/full json map csv2.csv", {
+    Papa.parse("csv/full json map csv2.csv", {
         download: true,
         header: true,
         complete: function(results) {
-            // Once CSV is parsed, find coordinates for the selected location
             const csvData = results.data;
-            for (let i = 0; i < csvData.length; i++) {
-                if (csvData[i]['type'] === locationType) {
-                    const lat = parseFloat(csvData[i]['geometry/coordinates/1']);
-                    const lng = parseFloat(csvData[i]['geometry/coordinates/0']);
-                    const locationName = csvData[i]['properties/Name'];
-                    // Create marker for the location
-                    createMarker(lat, lng, locationName);
-                    break; // Stop searching after finding the first match
+            csvData.forEach(row => {
+                // Extract latitude and longitude from CSV data
+                const lat = parseFloat(row['geometry/coordinates/1']);
+                const lng = parseFloat(row['geometry/coordinates/0']);
+                
+                // Define icon path based on location type
+                let iconPath;
+                switch(row.type) {
+                    case 'Hotel':
+                        iconPath = 'google-maps-route-planner-gpt/icons/hotel-icon.png';
+                        hotels.push({ name: row['properties/Name'], position: { lat, lng } });
+                        break;
+                    case 'Venue':
+                        iconPath = 'google-maps-route-planner-gpt/icons/cocktail.png';
+                        venues.push({ name: row['properties/Name'], position: { lat, lng } });
+                        break;
+                    case 'OVH':
+                        iconPath = 'google-maps-route-planner-gpt/icons/PSA-icon.png';
+                        preCER.push({ name: row['properties/Name'], position: { lat, lng } });
+                        break;
                 }
-            }
+
+                // Create custom icon
+                const icon = {
+                    url: iconPath,
+                    scaledSize: new google.maps.Size(32, 32) // Adjust size if needed
+                };
+
+                // Create marker for each location
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: map,
+                    title: row['properties/Name'],
+                    icon: icon
+                });
+            });
+
+            // Populate dropdown menus
+            populateDropdown('hotels', hotels.map(hotel => hotel.name));
+            populateDropdown('venues', venues.map(venue => venue.name));
+            populateDropdown('preCER', preCER.map(pcer => pcer.name));
         }
     });
 }
 
-// Function to create marker for a location
-function createMarker(lat, lng, locationName) {
-    // Create a marker with custom icon
-    const marker = new google.maps.Marker({
-        position: { lat: lat, lng: lng },
-        map: map,
-        title: locationName,
-        icon: {
-            url: getMarkerIconURL(locationName),
-            scaledSize: new google.maps.Size(32, 32)
-        }
-    });
-    // Store marker in markers object
-    markers[locationName] = marker;
-    // Center map on marker
-    map.setCenter(marker.getPosition());
-}
-
-// Function to get marker icon URL based on location name
-function getMarkerIconURL(locationName) {
-    let iconName;
-    switch(locationName) {
-        case 'PSA':
-            iconName = 'PSA icon.png';
-            break;
-        case 'Hotel':
-            iconName = 'hotel icon.png';
-            break;
-        case 'Venue':
-            iconName = 'cocktail.png';
-            break;
-        case 'PCH':
-            iconName = 'scan-code.png';
-            break;
-        default:
-            iconName = ''; // Default icon or handle other cases
-    }
-    // Assuming icons are stored in the 'icons/' directory
-    return 'google-maps-route-planner-gpt/icons/' + iconName;
-
-    // Function to populate dropdown menus with options from CSV data
-function populateDropdownMenus() {
-    // Read and parse CSV file
-    Papa.parse("google-maps-route-planner-gpt/csv/full json map csv2.csv", {
-        download: true,
-        header: true,
-        complete: function(results) {
-            // Once CSV is parsed, extract unique location types
-            const csvData = results.data;
-            const locationTypes = new Set(); // Using Set to store unique values
-            for (let i = 0; i < csvData.length; i++) {
-                locationTypes.add(csvData[i]['type']);
-            }
-         // Populate dropdown menus
-            populateDropdown('hotels', hotels);
-            populateDropdown('venues', venues);
-            populateDropdown('preCER', preCER);
-        }
-    });
-        }
+// Function to populate dropdown menu
+function populateDropdown(id, locations) {
+    const dropdown = document.getElementById(id);
+    locations.forEach(location => {
+        const option = document.createElement('option');
+        option.text = location;
+        dropdown.add(option);
     });
 }
 
