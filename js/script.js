@@ -1,11 +1,8 @@
-// Create a function to load Google Maps API asynchronously
-function loadGoogleMapsScript() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAgRsfOWrGJep_O1rSRRE7azvv61TGb8jU&callback=initMap`;
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
+// Define initMap function
+function initMap() {
+    // Create a map object and specify the DOM element for display
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 40.7128, lng: -74.0060 }, // New York City coordinates
+        zoom: 12 // Zoom level
+    });
 }
-
-// Call the function to load the Google Maps API
-loadGoogleMapsScript();
