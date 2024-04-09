@@ -1,9 +1,12 @@
 // Initialize map
 function initMap() {
+    // Define the coordinates for Paris
+    const parisCoordinates = { lat: 48.8566, lng: 2.3522 };
+
     // Create a map object and specify the DOM element for display
     const map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 0, lng: 0 },
-        zoom: 2 // Adjust the zoom level as needed
+        center: parisCoordinates,
+        zoom: 12 // Zoom level adjusted to focus on Paris
     });
 
     // Read and parse CSV file
