@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Maps Route Planner</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- Include CSS stylesheet -->
 </head>
 <body>
     <div id="controls">
@@ -19,21 +19,11 @@
         <br>
         <button id="getBestRoute">Get Best Route</button>
     </div>
-    <div id="map"></div>
+    <div id="map"></div> <!-- This is where the Google Map will be displayed -->
 
-    <!-- Include PapaParse library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="js/script.js"></script>
-    <script>
-        function loadGoogleMapsScript() {
-            const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAgRsfOWrGJep_O1rSRRE7azvv61TGb8jU&callback=initMap`;
-            script.async = true;
-            document.body.appendChild(script);
-        }
-        loadGoogleMapsScript();
-   <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgRsfOWrGJep_O1rSRRE7azvv61TGb8jU&callback=initMap"></script>
-
-    </script>
+    <!-- Include JavaScript libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script> <!-- Papa Parse library -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script> <!-- Google Maps JavaScript API -->
+    <script src="js/script.js"></script> <!-- Your custom JavaScript -->
 </body>
 </html>
