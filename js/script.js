@@ -6,6 +6,11 @@ function initMap() {
         zoom: 12 // Zoom level adjusted for Paris
     });
 
+    // Arrays to store unique locations of each type
+    const hotels = [];
+    const venues = [];
+    const preCER = []; // OVH locations for Pre-CER Hospitality
+
     // Read and parse CSV file
     Papa.parse("csv/full json map csv2.csv", {
         download: true,
@@ -23,7 +28,35 @@ function initMap() {
                     map: map,
                     title: row['properties/Name']
                 });
+
+                // Check type and add to respective array
+                switch(row.type) {
+                    case 'Hotel':
+                        hotels.push(row['properties/Name']);
+                        break;
+                    case 'Venue':
+                        venues.push(row['properties/Name']);
+                        break;
+                    case 'OVH':
+                        preCER.push(row['properties/Name']);
+                        break;
+                }
             });
+
+            // Populate dropdown menus
+            populateDropdown('hotels', hotels);
+            populateDropdown('venues', venues);
+            populateDropdown('preCER', preCER);
         }
+    });
+}
+
+// Function to populate dropdown menu
+function populateDropdown(id, locations) {
+    const dropdown = document.getElementById(id);
+    locations.forEach(location => {
+        const option = document.createElement('option');
+        option.text = location;
+        dropdown.add(option);
     });
 }
