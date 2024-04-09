@@ -1,1 +1,34 @@
+/* Add your custom styles here */
+
+#controls {
+    margin: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+select {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#map {
+    height: 400px; /* Set a height for the map container */
+    margin: 20px;
+    border: 1px solid #ccc;
+}
 
