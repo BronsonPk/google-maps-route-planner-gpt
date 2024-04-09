@@ -5,5 +5,29 @@ function initMap() {
         center: { lat: 40.7128, lng: -74.0060 }, // New York City coordinates
         zoom: 12 // Zoom level
     });
+
+    // Read and parse CSV file
+    Papa.parse("csv/full json map csv.csv", {
+        download: true,
+        header: true,
+        complete: function(results) {
+            // Once CSV is parsed, you can access the data in `results.data`
+            const csvData = results.data;
+            console.log(csvData);
+
+            // Loop through each row of the CSV data
+            csvData.forEach(row => {
+                // Extract coordinates
+                const lat = parseFloat(row['geometry/coordinates/1']);
+                const lng = parseFloat(row['geometry/coordinates/0']);
+                
+                // Create marker for each location
+                const marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    map: map,
+                    title: row.type // Use type as marker title
+                });
+            });
+        }
+    });
 }
- 
