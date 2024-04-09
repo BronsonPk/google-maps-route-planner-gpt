@@ -71,8 +71,3 @@ function populateDropdown(id, locations) {
         dropdown.add(option);
     });
 }
-
-// Call the function to populate dropdown menus when the page loads
-populateDropdownMenus();
-
-}
