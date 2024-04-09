@@ -15,13 +15,24 @@ Papa.parse("csv/full json map csv.csv", {
         const csvData = results.data;
         console.log(csvData);
 
+        // Check if CSV data is empty or not
+        if (csvData.length === 0) {
+            console.error("No data found in the CSV file.");
+            return;
+        }
+
         // Loop through each row of the CSV data
         csvData.forEach(row => {
             // Extract coordinates
             const lat = parseFloat(row['geometry/coordinates/1']);
             const lng = parseFloat(row['geometry/coordinates/0']);
-            console.log("Latitude:", lat, "Longitude:", lng);
-            
+
+            // Check if coordinates are valid
+            if (isNaN(lat) || isNaN(lng)) {
+                console.error("Invalid coordinates for row:", row);
+                return; // Skip this row
+            }
+
             // Create marker for each location
             const marker = new google.maps.Marker({
                 position: { lat, lng },
@@ -32,7 +43,3 @@ Papa.parse("csv/full json map csv.csv", {
     }
 });
 
-            });
-        }
-    });
-}
