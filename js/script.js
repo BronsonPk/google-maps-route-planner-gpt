@@ -6,3 +6,4 @@ function initMap() {
         zoom: 12 // Zoom level
     });
 }
+ 
