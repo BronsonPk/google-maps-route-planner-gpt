@@ -10,6 +10,10 @@ function initMap() {
         zoom: 12
     });
 }
+// Arrays to store unique locations of each type
+    const hotels = [];
+    const venues = [];
+    const preCER = []; // OVH locations for Pre-CER Hospitality
 
 // Function to handle dropdown selection
 function handleDropdownSelection() {
@@ -102,13 +106,12 @@ function populateDropdownMenus() {
             for (let i = 0; i < csvData.length; i++) {
                 locationTypes.add(csvData[i]['type']);
             }
-            // Populate dropdown menus with unique location types
-            locationTypes.forEach(type => {
-                const option = document.createElement('option');
-                option.value = type;
-                option.textContent = type;
-                document.getElementById('locationType').appendChild(option);
-            });
+         // Populate dropdown menus
+            populateDropdown('hotels', hotels);
+            populateDropdown('venues', venues);
+            populateDropdown('preCER', preCER);
+        }
+    });
         }
     });
 }
