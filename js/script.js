@@ -26,15 +26,15 @@ function initMap() {
                 let iconPath;
                 switch(row.type) {
                     case 'Hotel':
-                        iconPath = 'google-maps-route-planner-gpt/icons/hotel-icon.png';
+                        iconPath = 'icons/hotel-icon.png';
                         hotels.push({ name: row['properties/Name'], position: { lat, lng } });
                         break;
                     case 'Venue':
-                        iconPath = 'google-maps-route-planner-gpt/icons/cocktail.png';
+                        iconPath = 'icons/cocktail.png';
                         venues.push({ name: row['properties/Name'], position: { lat, lng } });
                         break;
                     case 'OVH':
-                        iconPath = 'google-maps-route-planner-gpt/icons/PSA-icon.png';
+                        iconPath = 'icons/PSA-icon.png';
                         preCER.push({ name: row['properties/Name'], position: { lat, lng } });
                         break;
                 }
