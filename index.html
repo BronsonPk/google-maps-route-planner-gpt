@@ -1,30 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps Route Planner</title>
-    <link rel="stylesheet" href="css/style.css">
+  <title>Parisian Hotels</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </head>
 <body>
-    <div id="controls">
-        <label for="hotels">Select Hotel:</label>
-        <select id="hotels"></select>
-        <br>
-        <label for="venues">Select Venue:</label>
-        <select id="venues"></select>
-        <br>
-        <label for="preCER">Select Pre-CER Hospitality (OVH):</label>
-        <select id="preCER"></select>
-        <br>
-        <button id="getBestRoute">Get Best Route</button>
-    </div>
-    <div id="map"></div>
+  <div id="map"></div>
+  <script>
+    let map;
+    let hotels = [
+      { name: "Renaissance Vendome", lat: 48.8692, lng: 2.3323 },
+      { name: "Sofitel Le Faubourg", lat: 48.8689, lng: 2.3152 },
+      { name: "Hotel Montalembert", lat: 48.8647, lng: 2.3282 },
+      { name: "Hotel Bel Ami", lat: 48.8547, lng: 2.3368 },
+      { name: "Maison Albar Pont Neuf", lat: 48.8584, lng: 2.3482 },
+      { name: "Relais Christine", lat: 48.8542, lng: 2.3428 },
+      { name: "Maison Breguet", lat: 48.8724, lng: 2.3547 },
+      { name: "La Maison Champs Elysees", lat: 48.8692, lng: 2.3094 },
+      { name: "Cinq Codet", lat: 48.8628, lng: 2.3042 },
+      { name: "Hotel Serotel Lutece", lat: 48.8522, lng: 2.3481 },
+      { name: "Lord ByronToo Hotel", lat: 48.8742, lng: 2.3107 },
+      { name: "Nuage Hotel", lat: 48.8802, lng: 2.3267 },
+      { name: "Hotel de Seze", lat: 48.8747, lng: 2.3322 },
+      { name: "Hotel Therese", lat: 48.8589, lng: 2.3297 },
+      { name: "Okko Hotel La Defense", lat: 48.8882, lng: 2.2732 },  // Approximate location
+      { name: "Novotel Paris Tour Eiffel", lat: 48.8584, lng: 2.2767 }
+    ];
 
-    <!-- Include PapaParse library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="js/script.js"></script>
-    <!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgRsfOWrGJep_O1rSRRE7azvv61TGb8jU&callback=initMap" async defer></script>
+    function initMap() {
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: { lat: 48.8566, lng: 2.3522 } // Center of Paris
+      });
+
+      for (let hotel of hotels) {
+        let marker = new google.maps.Marker({
+          position: { lat: hotel.lat, lng: hotel.lng },
+          map: map,
+          title: hotel.name
+        });
+      }
+    }
+  </script>
 </body>
 </html>
